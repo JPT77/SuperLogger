@@ -1,0 +1,34 @@
+<logger>
+	<logsink name="LogEmail" class="org.grlea.log.LogSinkEmail" loglevel="WARN">
+		<property name="email.recipients" 		value="jan.tisje@004gmbh.de" />
+		<property name="email.sender" 			value="jan.tisje@004gmbh.de" />
+		<property name="email.subject" 			value="Fehler: {1}" />
+		<property name="email.server" 			value="mail" />
+		<property name="mail.pop3.host" 		value="" />
+		<property name="OFF.mail.pop3.user" 	value="user" />
+		<property name="OFF.mail.pop3.password" value="xxx" />
+		<property name="OFF.mail.pop3.port" 	value="25" />
+		<property name="OFF.mail.pop3.auth" 	value="false" />
+		<property name="OFF.mail.pop3.socketFactory.class" value="javax.net.ssl.SSLSocketFactory" />
+		<property name="OFF.mail.store.protocol" 	value="" />
+		<property name="OFF.mail.transport.protocol" value="" />
+		<property name="OFF.mail.host" 				value="" />
+		<property name="OFF.mail.from" 				value="" />
+		<logqueue class="util.ThreadLocalQueue" queuesize="10" />
+	</logsink>
+<!-- 
+	<logsink name="LogConsole" class="org.grlea.log.LogSink" loglevel="DEBUG" />
+	<logsink name="LogFile" class="org.grlea.log.LogSinkFile" loglevel="INFO">
+		<property name="path" value="log" />
+		<property name="prefix" value="logfile" />
+
+		<logrotate name="OnStartup" class="org.grlea.log.LogRotateOnStartup" />
+		<logrotate name="OnSize" class="org.grlea.log.LogRotateFileSize">
+			<property name="filesize" value="10b" />
+		</logrotate>
+		<logarchive name="DeleteAfter10" class="org.grlea.log.LogArchiveDelete">
+			<property name="filecount" value="10b" />
+		</logarchive>
+	</logsink>
+ -->
+</logger>
