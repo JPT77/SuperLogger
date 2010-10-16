@@ -19,13 +19,13 @@ import org.xml.sax.SAXException;
 import util.SimpleQueue;
 
 
-class LogBootup {
+class LogSingleton {
 
-	private static LogBootup instance = new LogBootup();
+	private static LogSingleton instance = new LogSingleton();
 
 	private Map<String, LogSink> logsinks = new HashMap<String, LogSink>();
 	
-	public LogBootup() {
+	public LogSingleton() {
 		try {
 			init("logger.xml");
 		} catch (Throwable e) {

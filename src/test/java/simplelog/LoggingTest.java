@@ -1,4 +1,6 @@
-package log;
+package simplelog;
+
+import simplelog.SimpleLogger;
 
 
 public class LoggingTest {

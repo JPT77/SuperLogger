@@ -1,13 +1,15 @@
-package log;
+package simplelog;
 
+import util.StringUtils;
+import log.LogLevel;
+import log.LogMessage;
+import log.LogMessageException;
+import log.LogMessageObject;
+import log.LogMessageTrace;
+import log.typewrapper.ByteArray;
 import log.typewrapper.CharArray;
 import log.typewrapper.IntArray;
 import log.typewrapper.LongArray;
-
-import org.grlea.log.typewrapper.ByteArray;
-
-
-
 
 public class BasicLogger extends AbstractLogger {
 
@@ -262,8 +264,8 @@ public class BasicLogger extends AbstractLogger {
 		logMessage(msg);
 		return msg.getMessageNumber();
     }
-    
-    
+
+
     public final long start(String methodName) {
     	return start(methodName, null);
     }
@@ -274,8 +276,8 @@ public class BasicLogger extends AbstractLogger {
 		logMessage(msg);
 		return msg.getMessageNumber();
     }
-    
-    
+
+
     public final long finish(String methodName) {
     	return finish(methodName, null);
     }
@@ -286,20 +288,20 @@ public class BasicLogger extends AbstractLogger {
 		logMessage(msg);
 		return msg.getMessageNumber();
     }
-    
+
 
 	/**
 	 * <p>
 	 * Logs a message containing an exception (or throwable).
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * The exception will be printed only if the given debug level is less than
 	 * or equal to the current debug level of this <code>SimpleLogger</code>.
 	 * This method will result in the stack trace of the exception being printed
 	 * if this option is turned on in the properties (which it is by default).
 	 * </p>
-	 * 
+	 *
 	 * @param t
 	 *            the throwable to log.
 	 */
@@ -314,15 +316,15 @@ public class BasicLogger extends AbstractLogger {
 	 * <p>
 	 * Logs a simple debug message.
 	 * </p>
-	 * 
+	 *
 	 * <p>
 	 * The message will be printed if the given debug level is less than or
 	 * equal to the current debug level of this <code>SimpleLogger</code>.
 	 * </p>
-	 * 
+	 *
 	 * @param message
 	 *            The debug message to print.
-	 * 
+	 *
 	 * @see #fatal
 	 * @see #error
 	 * @see #warn

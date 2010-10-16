@@ -1,4 +1,4 @@
-package log.rollover;
+package simplelog.rollover;
 
 // $Id: RolloverManager.java,v 1.7 2006/07/21 11:57:31 grlea Exp $
 // Copyright (c) 2004-2006 Graham Lea. All rights reserved.

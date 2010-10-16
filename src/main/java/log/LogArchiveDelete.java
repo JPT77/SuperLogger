@@ -1,5 +1,5 @@
 package log;
 
-public class LogArchiveDelete {
+public class LogArchiveDelete implements LogArchive {
 
 }

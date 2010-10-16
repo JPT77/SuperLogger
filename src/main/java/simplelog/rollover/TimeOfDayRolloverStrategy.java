@@ -1,4 +1,4 @@
-package log.rollover;
+package simplelog.rollover;
 
 // $Id: TimeOfDayRolloverStrategy.java,v 1.4 2006/07/13 12:39:15 grlea Exp $
 // Copyright (c) 2004-2006 Graham Lea. All rights reserved.

@@ -1,6 +1,6 @@
 package log.typewrapper;
 
-import log.StringUtils;
+import util.StringUtils;
 
 public class ByteArray extends ScalarArray {
 

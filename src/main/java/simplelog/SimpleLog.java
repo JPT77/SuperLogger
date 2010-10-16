@@ -1,4 +1,4 @@
-package log;
+package simplelog;
 
 
 // $Id: SimpleLog.java,v 1.24 2006/08/15 10:49:23 grlea Exp $
@@ -48,7 +48,9 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import log.rollover.RolloverManager;
+import simplelog.rollover.RolloverManager;
+
+import log.LogLevel;
 
 
 /**

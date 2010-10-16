@@ -1,4 +1,6 @@
-package log;
+package simplelog;
+
+import log.LogLevel;
 
 
 // $Id: SimpleLogger.java,v 1.12 2006/07/13 12:40:06 grlea Exp $

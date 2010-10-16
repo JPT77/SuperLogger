@@ -1,5 +1,5 @@
 package log;
 
-public class LogArchiveMove {
+public class LogArchiveMove implements LogArchive {
 
 }

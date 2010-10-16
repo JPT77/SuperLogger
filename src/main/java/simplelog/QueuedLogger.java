@@ -1,11 +1,9 @@
-package log.obsolete;
+package simplelog;
 
 import java.text.MessageFormat;
 import java.util.Date;
 
 import log.LogLevel;
-import log.SimpleLog;
-import log.SimpleLogger;
 
 
 import util.SimpleQueue;

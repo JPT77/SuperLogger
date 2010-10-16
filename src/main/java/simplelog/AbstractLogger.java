@@ -1,4 +1,7 @@
-package log;
+package simplelog;
+
+import log.LogLevel;
+import log.LogMessage;
 
 
 // Copyright (c) 2004-2006 Graham Lea. All rights reserved.
