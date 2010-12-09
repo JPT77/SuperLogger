@@ -61,7 +61,7 @@ public final class LogLevel {
 	 */
 	public static final LogLevel L7_LUDICROUS = new LogLevel(7, "LUDICR");
 
-	private static final int TRACE_INT = Integer.MAX_VALUE;
+	static final int TRACE_INT = Integer.MAX_VALUE;
 	/**
 	 * The "Trace" "level". This exists only to provide a name for output patterns that want to print
 	 * the name of the debug level. It should <b>never</b> be used outside of the Simple Log package.
@@ -69,7 +69,7 @@ public final class LogLevel {
 	static final LogLevel FAKE_TRACE = new LogLevel(TRACE_INT, "TRACE " );
 
 
-	private static final int REPORT_INT = Integer.MIN_VALUE;
+	static final int REPORT_INT = Integer.MIN_VALUE;
 	public static final LogLevel REPORT = new LogLevel(REPORT_INT, "REPORT");
 
 	/**
