@@ -1,6 +1,6 @@
-package log.typewrapper;
+package de.jpt.superlogger.typewrapper;
 
-import util.StringUtils;
+import de.jpt.superlogger.util.StringUtils;
 
 public class ByteArray extends ScalarArray {
 

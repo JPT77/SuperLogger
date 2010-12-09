@@ -1,10 +1,10 @@
-package log.typewrapper;
+package de.jpt.superlogger.typewrapper;
 
-public class LongArray extends ScalarArray {
+public class IntArray extends ScalarArray {
 	
-	private long[] data;
+	private int[] data;
 
-	public LongArray(long [] data) {
+	public IntArray(int [] data) {
 		this.data = data;
 	}
 
@@ -14,7 +14,7 @@ public class LongArray extends ScalarArray {
 		}
 
 		StringBuffer buf = new StringBuffer(data.length * 4);
-		buf.append("(long[]) [");
+		buf.append("(int[]) [");
 		for (int i = 0; i < data.length; i++) {
 			buf.append(data[i]);
 			if (i < data.length - 1){

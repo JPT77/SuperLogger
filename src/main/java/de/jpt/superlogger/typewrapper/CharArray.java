@@ -1,4 +1,4 @@
-package log.typewrapper;
+package de.jpt.superlogger.typewrapper;
 
 public class CharArray extends ScalarArray {
 	
