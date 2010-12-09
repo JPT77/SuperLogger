@@ -1,7 +1,7 @@
 package simplelog;
 
-import log.LogLevel;
-import log.LogMessage;
+import de.jpt.superlogger.LogLevel;
+import de.jpt.superlogger.LogMessage;
 
 
 // Copyright (c) 2004-2006 Graham Lea. All rights reserved.

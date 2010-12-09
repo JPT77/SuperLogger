@@ -1,15 +1,15 @@
 package simplelog;
 
-import util.StringUtils;
-import log.LogLevel;
-import log.LogMessage;
-import log.LogMessageException;
-import log.LogMessageObject;
-import log.LogMessageTrace;
-import log.typewrapper.ByteArray;
-import log.typewrapper.CharArray;
-import log.typewrapper.IntArray;
-import log.typewrapper.LongArray;
+import de.jpt.superlogger.LogLevel;
+import de.jpt.superlogger.LogMessage;
+import de.jpt.superlogger.LogMessageException;
+import de.jpt.superlogger.LogMessageObject;
+import de.jpt.superlogger.LogMessageTrace;
+import de.jpt.superlogger.typewrapper.ByteArray;
+import de.jpt.superlogger.typewrapper.CharArray;
+import de.jpt.superlogger.typewrapper.IntArray;
+import de.jpt.superlogger.typewrapper.LongArray;
+import de.jpt.superlogger.util.StringUtils;
 
 public class BasicLogger extends AbstractLogger {
 

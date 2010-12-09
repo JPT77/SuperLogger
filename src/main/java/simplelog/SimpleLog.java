@@ -48,9 +48,10 @@ import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.jpt.superlogger.LogLevel;
+
 import simplelog.rollover.RolloverManager;
 
-import log.LogLevel;
 
 
 /**

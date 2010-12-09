@@ -3,11 +3,12 @@ package simplelog;
 import java.text.MessageFormat;
 import java.util.Date;
 
-import log.LogLevel;
+import de.jpt.superlogger.LogLevel;
+import de.jpt.superlogger.util.SimpleQueue;
+import de.jpt.superlogger.util.ThreadLocalQueue;
 
 
-import util.SimpleQueue;
-import util.ThreadLocalQueue;
+
 
 public class QueuedLogger extends SimpleLogger {
 	
