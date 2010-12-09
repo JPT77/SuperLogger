@@ -8,7 +8,7 @@ import java.util.Properties;
 
 public class LogSinkDatabase extends LogSinkTable {
 
-	private Connection conn = null // new TestConnection();
+	private Connection conn = null; // new TestConnection();
 
 	public LogSinkDatabase(String name, LogLevel loglevel, Properties props) {
 		super(name, loglevel, props);
