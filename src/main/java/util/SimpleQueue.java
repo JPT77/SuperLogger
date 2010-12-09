@@ -5,7 +5,7 @@ public interface SimpleQueue<O> {
 	public void clear();
 
 	public boolean add(O obj);
-	
+
 	public O dequeue();
 
 	public boolean isEmpty();

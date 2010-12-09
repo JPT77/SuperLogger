@@ -1,8 +1,8 @@
 package util;
 
 
-public class ThreadLocalQueue<O> extends ThreadLocal<SimpleQueue<O>> implements SimpleQueue<O> {
-	
+class ThreadLocalQueue<O> extends ThreadLocal<SimpleQueue<O>> implements SimpleQueue<O> {
+
 	private int queuesize;
 
 	public ThreadLocalQueue(String queuesize) {
@@ -12,7 +12,7 @@ public class ThreadLocalQueue<O> extends ThreadLocal<SimpleQueue<O>> implements 
 	public ThreadLocalQueue(int queuesize) {
 		this.queuesize = queuesize;
 	}
-	
+
 	private SimpleQueue<O> getQueue() {
 		SimpleQueue<O> result = get();
 		if (result == null) {
@@ -25,11 +25,11 @@ public class ThreadLocalQueue<O> extends ThreadLocal<SimpleQueue<O>> implements 
 	public boolean add(O o) {
 		return getQueue().add(o);
 	}
-	
+
 	public void clear() {
 		getQueue().clear();
 	}
-	
+
 	public O dequeue() {
 		return getQueue().dequeue();
 	}
@@ -41,5 +41,5 @@ public class ThreadLocalQueue<O> extends ThreadLocal<SimpleQueue<O>> implements 
 	public Object getLock() {
 		return this;
 	}
-	
+
 }

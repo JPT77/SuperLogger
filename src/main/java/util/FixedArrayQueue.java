@@ -8,7 +8,7 @@ import java.util.Queue;
 
 /**
  * This queue is not thread save. Use ThreadLocalQueue or SyncedQueue instead, if your application logs from multiple threads. 
- * @author jtisje
+ * @author jpt
  *
  * @param <O>
  */
