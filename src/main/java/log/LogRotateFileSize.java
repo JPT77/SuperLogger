@@ -5,13 +5,15 @@ import java.util.Properties;
 
 public class LogRotateFileSize extends LogRotate {
 	
-	private final static long INTERVALL = 500;
+	private final static long INTERVALL = 5*60*1000;
 	
 	private long filesize;
 
 	public LogRotateFileSize(String name, LogSinkFile logger, Properties props) {
 		super(name, logger, props);
 		filesize = parseFilesize(props.getProperty("filesize"));
+		
+		createTimer(INTERVALL, false);
 	}
 	
 
@@ -19,11 +21,11 @@ public class LogRotateFileSize extends LogRotate {
 		return 1024*1024;
 	}
 	
-	protected void timerEvent() {
+	protected void rotate() {
 		System.out.println(logger.getFilesize() + ">" + filesize + " = " +(logger.getFilesize() > filesize));
 		
 		if (logger.getFilesize() > filesize) {
-			super.timerEvent();
+			super.rotate();
 		}
 	}
 	

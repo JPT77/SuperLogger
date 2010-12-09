@@ -6,7 +6,7 @@ import util.SimpleQueue;
 
 /**
  * Null LogSink, does not log anything. 
- * @author jtisje
+ * @author jpt
  *
  */
 public class LogSinkNull implements LogSink {

@@ -7,7 +7,7 @@ public class LogRotateOnStartup extends LogRotate {
 	
 	public LogRotateOnStartup(String name, LogSinkFile logger, Properties props) {
 		super(name, logger, props);
-		timerEvent();
+		rotate();
 	}
 
 	public static void main(String[] args) throws InterruptedException {

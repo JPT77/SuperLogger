@@ -4,94 +4,73 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import simplelog.SimpleLogger;
-
-// $Id: DebugLevel.java,v 1.9 2006/07/13 12:40:06 grlea Exp $
-// Copyright (c) 2004-2006 Graham Lea. All rights reserved.
-
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
 
 /**
- * <p>
- * A Java enum defining all possible debug levels. There are seven levels, from
- * "Fatal" (most important) to "Ludicrous" (most verbose).
- * </p>
- * <p>
- * Note that tracing is not related to the debug levels, as tracing is
- * controlled independently.
- * </p>
+ * <p>A Java enum defining all possible debug levels. There are seven levels, from "Fatal" (most
+ * important) to "Ludicrous" (most verbose).</p>
+ * <p>Note that tracing is not related to the debug levels, as tracing is controlled
+ * independently.</p>
  *
  * @version $Revision: 1.9 $
  * @author $Author: grlea $
  */
 public final class LogLevel {
 	/**
-	 * The "Fatal" level. This should be used when an unexpected error occurs
-	 * that is serious enough to cause or warrant the halting of the current
-	 * process or even the whole application.
+	 * The "Fatal" level. This should be used when an unexpected error occurs that is serious enough
+	 * to cause or warrant the halting of the current process or even the whole application.
 	 */
-	public static final LogLevel L1_FATAL = new LogLevel(1, "FATAL");
+	public static final LogLevel L1_FATAL = new LogLevel(1, "FATAL ");
 
 	/**
-	 * The "Error" level. This should be used when an unexpected error occurs
-	 * that cannot be recovered from.
+	 * The "Error" level. This should be used when an unexpected error occurs that cannot be
+	 * recovered from.
 	 */
-	public static final LogLevel L2_ERROR = new LogLevel(2, "ERROR");
+	public static final LogLevel L2_ERROR = new LogLevel(2, "ERROR ");
 
 	/**
-	 * The "Warning" level. This should be used when an unexpected error occurs
-	 * that CAN be recovered from.
+	 * The "Warning" level. This should be used when an unexpected error occurs that CAN be
+	 * recovered from.
 	 */
-	public static final LogLevel L3_WARN = new LogLevel(3, "WARN ");
+	public static final LogLevel L3_WARN = new LogLevel(3, "WARN  ");
 
 	/**
-	 * The "Info" level. This should be used for reporting information to the
-	 * end user.
+	 * The "Info" level. This should be used for reporting information to the end user.
 	 */
-	public static final LogLevel L4_INFO = new LogLevel(4, "INFO ");
+	public static final LogLevel L4_INFO = new LogLevel(4, "INFO  ");
 
 	/**
-	 * The "Debug" level. This should be used for the most basic debugging
-	 * statements. This may include the direction taken in a control structure,
-	 * events fired or received and the state of important objects or variables.
+	 * The "Debug" level. This should be used for the most basic debugging statements. This may
+	 * include the direction taken in a control structure, events fired or received and the state of
+	 * important objects or variables.
 	 */
-	public static final LogLevel L5_DEBUG = new LogLevel(5, "DEBUG");
+	public static final LogLevel L5_DEBUG = new LogLevel(5, "DEBUG ");
 
 	/**
-	 * The "Verbose" level. This should be used for debugging statements that
-	 * produce a large amount of output, are called often, or that don't need to
-	 * be seen when performing high-level debugging. This could include
-	 * extraneous events (e.g. keyboard or mouse events), the state of
-	 * not-so-important objects or variables, and statements that exist within a
-	 * loop. It is recommended that method parameters and return values be
-	 * logged at this level (unless the amount of output they produce is
-	 * "ludicrous").
+	 * The "Verbose" level. This should be used for debugging statements that produce a large amount
+	 * of output, are called often, or that don't need to be seen when performing high-level
+	 * debugging. This could include extraneous events (e.g. keyboard or mouse events), the state of
+	 * not-so-important objects or variables, and statements that exist within a loop. It is
+	 * recommended that method parameters and return values be logged at this level (unless the
+	 * amount of output they produce is "ludicrous").
 	 */
-	public static final LogLevel L6_VERBOSE = new LogLevel(6, "VERBO");
+	public static final LogLevel L6_VERBOSE = new LogLevel(6, "VERBOS");
 
 	/**
-	 * The "Ludicrous" level. This should be used for debugging statements that
-	 * produce a ridiculous wealth of output, e.g. printing a line for every
-	 * pixel in an image.
+	 * The "Ludicrous" level. This should be used for debugging statements that produce a
+	 * ridiculous wealth of output, e.g. printing a line for every pixel in an image.
 	 */
-	public static final LogLevel L7_LUDICROUS = new LogLevel(7, "LUDIC");
+	public static final LogLevel L7_LUDICROUS = new LogLevel(7, "LUDICR");
 
+	private static final int TRACE_INT = Integer.MAX_VALUE;
 	/**
-	 * The "Trace" "level". This exists only to provide a name for output
-	 * patterns that want to print the name of the debug level. It should
-	 * <b>never</b> be used outside of the Simple Log package.
+	 * The "Trace" "level". This exists only to provide a name for output patterns that want to print
+	 * the name of the debug level. It should <b>never</b> be used outside of the Simple Log package.
 	 */
-	static final LogLevel FAKE_TRACE = new LogLevel(Integer.MAX_VALUE, "TRACE");
+	static final LogLevel FAKE_TRACE = new LogLevel(TRACE_INT, "TRACE " );
+
+
+	private static final int REPORT_INT = Integer.MIN_VALUE;
+	public static final LogLevel REPORT = new LogLevel(REPORT_INT, "REPORT");
 
 	/**
 	 * A map of all {@link LogLevel}s, keyed by the lower-case version of their
@@ -100,8 +79,7 @@ public final class LogLevel {
 	private static final Map<String, LogLevel> levelsByName;
 
 	static {
-		HashMap<String, LogLevel> levels = new HashMap<String, LogLevel>(10,
-				0.8F);
+		HashMap<String, LogLevel> levels = new HashMap<String, LogLevel>(10, 0.8F);
 		levels.put("fatal", L1_FATAL);
 		levels.put("error", L2_ERROR);
 		levels.put("warn", L3_WARN);
@@ -124,14 +102,12 @@ public final class LogLevel {
 	private final String name;
 
 	/**
-	 * Creates a new <code>DebugLevel</code> with the given level. This is
-	 * private to preven external instantiation.
+	 * Creates a new <code>DebugLevel</code> with the given level. This is private to preven external
+	 * instantiation.
 	 *
-	 * @param level
-	 *            the level for the new <code>DebugLevel</code>.
+	 * @param level the level for the new <code>DebugLevel</code>.
 	 *
-	 * @param name
-	 *            the name of the new <code>DebugLevel</code>.
+	 * @param name the name of the new <code>DebugLevel</code>.
 	 */
 	private LogLevel(int level, String name) {
 		this.level = level;
@@ -139,46 +115,35 @@ public final class LogLevel {
 	}
 
 	/**
-	 * Returns <code>true</code> if a {@link SimpleLogger} that has <b>this</b>
-	 * level should log a message that has the <b>given</b> level.
+	 * Returns <code>true</code> if a {@link SimpleLogger} that has <b>this</b> level should log a
+	 * message that has the <b>given</b> level.
 	 *
-	 * @param logLevel
-	 *            the level of the message to be considered
+	 * @param logLevel the level of the message to be considered
 	 *
-	 * @return <code>true</code> if the message should be logged,
-	 *         <code>false</code> if it should be ignored.
+	 * @return <code>true</code> if the message should be logged, <code>false</code> if it should be
+	 * ignored.
 	 */
 	public boolean shouldLog(LogLevel logLevel) {
 		return logLevel.level <= this.level;
 	}
 
 	/**
-	 * Returns the <code>DebugLevel</code> object associated with the given
-	 * level. If the given level is above or below the defined levels, the
-	 * closest level will be returned.
+	 * Returns the <code>DebugLevel</code> object associated with the given level. If the given level
+	 * is above or below the defined levels, the closest level will be returned.
 	 *
-	 * @param level
-	 *            the level value whose corresponding <code>DebugLevel</code> is
-	 *            to be returned.
+	 * @param level the level value whose corresponding <code>DebugLevel</code> is to be returned.
 	 *
 	 * @return The matching or closest matching <code>DebugLevel</code>.
 	 */
 	public static LogLevel fromInt(int level) {
 		switch (level) {
-		case 1:
-			return L1_FATAL;
-		case 2:
-			return L2_ERROR;
-		case 3:
-			return L3_WARN;
-		case 4:
-			return L4_INFO;
-		case 5:
-			return L5_DEBUG;
-		case 6:
-			return L6_VERBOSE;
-		case 7:
-			return L7_LUDICROUS;
+		case 1: return L1_FATAL;
+		case 2: return L2_ERROR;
+		case 3: return L3_WARN;
+		case 4: return L4_INFO;
+		case 5: return L5_DEBUG;
+		case 6: return L6_VERBOSE;
+		case 7: return L7_LUDICROUS;
 
 		default:
 			if (level < 1)
@@ -189,22 +154,17 @@ public final class LogLevel {
 	}
 
 	/**
-	 * Returns the <code>DebugLevel</code> object associated with the given
-	 * name. The name of the debug levels is equivalent to their name in the
-	 * class except with the "Lx_" prefix. E.g. the name of the
-	 * {@link #L1_FATAL} level is "Fatal". The name is treated
-	 * case-insensitively.
+	 * Returns the <code>DebugLevel</code> object associated with the given name. The name of the
+	 * debug levels is equivalent to their name in the class except with the "Lx_" prefix. E.g. the
+	 * name of the {@link #L1_FATAL} level is "Fatal". The name is treated case-insensitively.
 	 *
-	 * @param name
-	 *            the name of the <code>DebugLevel</code> to return. This name
-	 *            is not case-sensitive, but <b>will not</b> be automatically
-	 *            trimmed by this method.
+	 * @param name the name of the <code>DebugLevel</code> to return. This name is not
+	 * case-sensitive, but <b>will not</b> be automatically trimmed by this method.
 	 *
 	 * @return The <code>DebugLevel</code> matching the given name.
 	 *
-	 * @throws IllegalArgumentException
-	 *             if <code>name</code> is <code>null</code> or if there is no
-	 *             <code>DebugLevel</code> associated with the specified name.
+	 * @throws IllegalArgumentException if <code>name</code> is <code>null</code> or if there is no
+	 * <code>DebugLevel</code> associated with the specified name.
 	 */
 	static LogLevel fromName(String name) throws IllegalArgumentException {
 		if (name == null)
@@ -212,8 +172,7 @@ public final class LogLevel {
 
 		LogLevel level = (LogLevel) levelsByName.get(name.toLowerCase());
 		if (level == null)
-			throw new IllegalArgumentException(
-					"Unrecognised DebugLevel name: '" + name + "'");
+			throw new IllegalArgumentException("Unrecognised DebugLevel name: '" + name + "'");
 
 		return level;
 	}
@@ -226,9 +185,8 @@ public final class LogLevel {
 	}
 
 	/**
-	 * Returns <code>true</code> if the given object is a
-	 * <code>DebugLevel</code> with the same level value as this
-	 * <code>DebugLevel</code>.
+	 * Returns <code>true</code> if the given object is a <code>DebugLevel</code> with the same level
+	 * value as this <code>DebugLevel</code>.
 	 */
 	public boolean equals(Object o) {
 		if (o == this)

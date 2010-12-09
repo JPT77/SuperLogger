@@ -6,7 +6,7 @@ import util.SimpleQueue;
 
 /**
  * Root LogSink for most standard Loggers. 
- * @author jtisje
+ * @author jpt
  *
  */
 public abstract class LogSinkAbstract implements LogSink {

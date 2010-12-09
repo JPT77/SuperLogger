@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 
 /**
  * Needed for externally locking access to Writer while rotating logfiles.
- * @author jtisje
+ * @author jpt
  *
  */
 public class LockablePrintWriter extends PrintWriter {

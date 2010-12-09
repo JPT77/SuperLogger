@@ -16,7 +16,7 @@ import javax.mail.internet.MimeMultipart;
 
 import com.sun.mail.smtp.SMTPTransport;
 
-public class LogSinkEmail extends LogSink {
+public class LogSinkEmail extends LogSinkConsole {
 	
 	private Address[] recipients;
 	private Address sender;
@@ -50,7 +50,7 @@ public class LogSinkEmail extends LogSink {
 		if (shouldLog(message)) {			
 			StringBuffer mailbody = new StringBuffer();
 			if (queue != null) {
-				synchronized (queue.getLock()) {
+				synchronized (queue) {
 					while (!queue.isEmpty()) {
 						mailbody.append(queue.dequeue().toString());
 						mailbody.append('\n');

@@ -4,7 +4,7 @@ package log;
  * This class logs more than one line. 
  * You may use it to log the result of a batch for example. 
  * Then add an LogSinkEmail, that sends the report.
- * @author jtisje
+ * @author jpt
  *
  */
 public class LogMessageReport extends LogMessage {

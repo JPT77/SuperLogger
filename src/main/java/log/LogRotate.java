@@ -22,7 +22,7 @@ public abstract class LogRotate {
          timer = new Timer(!once);
          TimerTask timertask = new TimerTask() {
         	 public void run() {
-        		 timerEvent();
+        		 rotate();
         	 }                
          };
 
@@ -34,7 +34,7 @@ public abstract class LogRotate {
 
     }
 
-    protected void timerEvent() {
+    protected void rotate() {
         logger.rotateNow();
     }
     

@@ -19,11 +19,12 @@ import org.xml.sax.SAXException;
 import util.SimpleQueue;
 
 
-class LogSingleton {
+public class LogSingleton {
 
 	private static LogSingleton instance = new LogSingleton();
 
 	private Map<String, LogSink> logsinks = new HashMap<String, LogSink>();
+	private Constructor<Logger> loggerConstructor = null;	
 	
 	public LogSingleton() {
 		try {
@@ -33,25 +34,69 @@ class LogSingleton {
 		}			
 	}
 	
+	public static Logger getLogger(Class<Logger> clazz) {
+		return instance.getLoggerInstance(clazz.getName());		
+	}
+
+	public static Logger getLogger(String name) {
+		return instance.getLoggerInstance(name);		
+	}
+	
+	public Logger getLoggerInstance(String name) {	
+		if (loggerConstructor != null) {
+			try {
+				return loggerConstructor.newInstance(this, name);
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+		}
+		return new Logger(this, name);
+	}
+
+
+	
 	private void init(String filename) throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory fac = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = fac.newDocumentBuilder();
 		Document doc = builder.parse(new File("logger.xml"));		
-		Element root = doc.getDocumentElement();		
+		Element root = doc.getDocumentElement();
+		parseGlobals(root);
 		createSinks(root);		
 	}
 	
+	private void parseGlobals(Element elem) {
+		NodeList elems = elem.getElementsByTagName("global");
+		if (elems.getLength() > 0) {
+			loggerConstructor = getLoggerClass((Element) elems.item(0));
+		}
+	}
+
+	private Constructor<Logger> getLoggerClass(Element elem) {
+		NodeList elems = elem.getElementsByTagName("logger");
+		if (elems.getLength() > 0) {
+			try {
+				Element logger = (Element) elems.item(0);
+				@SuppressWarnings("unchecked")
+				Class<Logger> clazz = (Class<Logger>) Class.forName(logger.getAttribute("class"));
+				return clazz.getConstructor(LogSingleton.class, String.class);
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
 	/**
 	 * Parse Configfile, Part Logsinks
 	 */
-	private void createSinks(Element root) {
-		NodeList elems = root.getElementsByTagName("logsink");
+	private void createSinks(Element elem) {
+		NodeList elems = elem.getElementsByTagName("logsink");
 		if (elems != null && elems.getLength() > 0) {
 			for (int i = 0; i < elems.getLength(); i++) {
 				register(createSink((Element) elems.item(i)));
 			}
 		} else {
-			register(new LogSink("default", LogLevel.L3_WARN, new Properties()));
+			register(new LogSinkConsole("default", LogLevel.L3_WARN, new Properties()));
 		}
 	}
 
@@ -124,11 +169,12 @@ class LogSingleton {
 	/**
 	 * Parse Configfile, Part LogRotate
 	 */
-	private LogRotate createRotate(Element elem, LogSink logsink) {		
+	private void createRotate(Element elem, LogSink logsink) {		
 		Properties props = getProperties(elem);
 		String classname = elem.getAttribute("class");
 		String name = getAttribute(elem, "name", "default");
-		return (LogRotate) createInstance(classname, null, new Object[] { name, logsink, props });
+		logsink.addLogRotate(classname, name, props);
+//		return (LogRotate) createInstance(classname, null, new Object[] { name, logsink, props });
 	}
 
 	/**
@@ -169,14 +215,39 @@ class LogSingleton {
 	}
 	
 	public static void main(String[] args) {
-		instance.log(new LogMessage(LogLevel.L4_INFO, "LogBootup", "message"));		
-		instance.log(new LogMessage(LogLevel.L4_INFO, "LogBootup", "message1"));		
-		instance.log(new LogMessage(LogLevel.L4_INFO, "LogBootup", "message2"));		
+		
+		Thread thread = new Thread("thread") {			
+			public void run() {
+				instance.log(new LogMessage(LogLevel.L4_INFO,  "LogBootup", "message1"));
+				for (int i = 0; i < 10; i++) {
+					try {
+						Thread.sleep(1);
+					} catch (InterruptedException e) {
+						instance.log(new LogMessageException(LogLevel.L4_INFO,  "LogBootup", e));
+					}
+					instance.log(new LogMessage(LogLevel.L4_INFO,  "LogBootup", "message1"));
+				}
+				instance.log(new LogMessage(LogLevel.L4_INFO,  "LogBootup", "message1"));
+			}
+		};
+
+		thread.start();
+		
+		instance.log(new LogMessageTrace(LogMessageTrace.ENTRY, "LogBootup", "message", null));		
+		instance.log(new LogMessage(LogLevel.L4_INFO,  "LogBootup", "message"));		
+		instance.log(new LogMessage(LogLevel.L4_INFO,  "LogBootup", "message1"));		
+		instance.log(new LogMessage(LogLevel.L4_INFO,  "LogBootup", "message2"));		
 		instance.log(new LogMessage(LogLevel.L5_DEBUG, "LogBootup", "message3"));		
 		instance.log(new LogMessage(LogLevel.L5_DEBUG, "LogBootup", "message4"));		
 		instance.log(new LogMessage(LogLevel.L5_DEBUG, "LogBootup", "message5"));		
 		instance.log(new LogMessage(LogLevel.L5_DEBUG, "LogBootup", "message6"));		
-		instance.log(new LogMessage(LogLevel.L3_WARN, "LogBootup", "message7"));		
+		instance.log(new LogMessage(LogLevel.L3_WARN,  "LogBootup", "message7"));		
+		instance.log(new LogMessageTrace(LogMessageTrace.EXIT, "LogBootup", "message", null));		
 	}
-
+	
+	public void clearQueues() {
+		for (LogSink sink : logsinks.values()) {
+			sink.clearQueue();
+		}		
+	}
 }

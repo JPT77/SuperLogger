@@ -4,7 +4,7 @@ import java.util.Properties;
 
 /**
  * Root LogSink for most standard Loggers. 
- * @author jtisje
+ * @author jpt
  *
  */
 public class LogSinkConsole extends LogSinkAbstract {

@@ -1,16 +1,18 @@
 package log;
 
+import java.util.List;
 import java.util.Properties;
 
-public class LogSinkEclipse extends LogSink {
+public class LogSinkEclipse extends LogSinkTable {
 
 	public LogSinkEclipse(String name, LogLevel loglevel, Properties props) {
 		super(name, loglevel, props);
 	}
 	
-	public void log(LogMessage message) {
-		// TODO Auto-generated method stub
+	protected void logToTable(LogMessage message) {
+		String[] header = message.getHeader();
 		
+		List<Object> values = message.getValues();
 	}
 
 }

@@ -1,6 +1,8 @@
 package log;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class LogMessage {
 
@@ -57,6 +59,23 @@ public class LogMessage {
 		appendParams(buffer);
 		return buffer.toString();
 	}
+	
+	public List<Object> getValues() {
+		ArrayList<Object> result = new ArrayList<Object>();
+		result.add(timestamp);
+		result.add(level);
+		result.add(Thread.currentThread().getName());
+		result.add(classname);
+		result.add(getType());
+		result.add(message);
+		return result;
+	}
+
+	public String[] getHeader() {
+		return new String[] {
+				"Date", "Level", "Thread", "Class", "MessageType", "Message", "Parameter"
+		};
+	}	
 
 	private static String getCaller(StackTraceElement[] stacktrace, String classname) {
 		for (int i = 1; i < stacktrace.length; i++) {
@@ -100,5 +119,5 @@ public class LogMessage {
 	public LogLevel getLevel() {
 		return level;
 	}
-	
+
 }

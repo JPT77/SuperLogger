@@ -8,7 +8,7 @@ import util.SimpleQueue;
 
 /**
  * Wraps LogSinkFile to have a single logfile per thread. 
- * @author jtisje
+ * @author jpt
  */
 public class LogSinkFileThreadLocal extends ThreadLocal<LogSinkFile> implements LogSink {
 

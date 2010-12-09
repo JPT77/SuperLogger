@@ -4,32 +4,40 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.lang.reflect.Constructor;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
 
-public class LogSinkFile extends LogSink {
+public class LogSinkFile extends LogSinkConsole {
 	
 	private File parent;
 	private final File logfile;
-	private PrintWriter writer;
+	private LockablePrintWriter writer;
 	private Date created;
 	private String prefix;
 
-	public LogSinkFile(String name, LogLevel loglevel, Properties props) {
+	LogSinkFile(String name, LogLevel loglevel, Properties props, String prefix) {
 		super(name, loglevel, props);
 		parent = new File(props.getProperty("longsink.file.filename.path", "." ));
-		prefix = props.getProperty("longsink.file.filename.prefix", "logfile");
+		this.prefix = prefix; 
 		logfile = new File(parent.getPath()+"/"+prefix+".log");
 		created = new Date();
 		writer = createLogFile(logfile, true);
 	}
 
-	private static PrintWriter createLogFile(final File logfile, boolean append) {
+	public LogSinkFile(String name, LogLevel loglevel, Properties props) {
+		this(name, loglevel, props, props.getProperty("longsink.file.filename.prefix", "logfile"));
+	}
+
+	LogSinkFile(String name, String thread, LogLevel loglevel, Properties props) {
+		this(name, loglevel, props, props.getProperty("longsink.file.filename.prefix", "logfile")+"-"+thread);
+	}
+
+	private static LockablePrintWriter createLogFile(final File logfile, boolean append) {
 		try {
-			return new PrintWriter(new BufferedWriter(new FileWriter(logfile, append)));
+			return new LockablePrintWriter(new BufferedWriter(new FileWriter(logfile, append)));
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -38,9 +46,7 @@ public class LogSinkFile extends LogSink {
 
 	public void log(String message) {
 		if (writer != null) {
-			synchronized (logfile) {
-				writer.println(message);
-			}
+			writer.println(message);
 		} else {
 			super.log(message);
 		}				
@@ -52,7 +58,7 @@ public class LogSinkFile extends LogSink {
 			System.out.println(format.format(new Date())+" rotateNow");
 			File target = new File(parent.getPath()+"/"+prefix+"-"+format.format(created)+".log");
 			System.out.println("Rotate to "+target.getAbsolutePath());
-			synchronized (logfile) {
+			synchronized (writer.getLock()) {
 				close();
 				if (!logfile.renameTo(target)) {
 					System.out.println("Could not rename logfile to "+target.getAbsolutePath());
@@ -76,19 +82,25 @@ public class LogSinkFile extends LogSink {
 	
 	public void close() {
 		if (writer != null) {
-			synchronized (logfile) {
-				writer.close();
-				writer = null;	
-			}
+			writer.close();
+			writer = null;	
 		}
 	}
 
 	public void flush() {
 		if (writer != null) {
-			synchronized (logfile) {
-				writer.flush();
-			}
+			writer.flush();
 		}
 	}
+	
+	public void addLogRotate(String classname, String name, Properties props) {
+		try {			
+			Class<?> clazz = Class.forName(classname);
+			Constructor<?> constructor = clazz.getConstructor(String.class, LogSinkFile.class, Properties.class);
+			constructor.newInstance(new Object[] { name, this, props } );
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
+	}	
 	
 }
